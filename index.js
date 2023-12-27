@@ -3,6 +3,7 @@ import express from 'express'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import { user } from "./Controller/Routes/user.routes.js"
 import { createToken } from './Controller/Helpers/jwt.helper.js'
 const app = express()
 
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('Hola mundo')
 })
 app.get('/token', createToken)
-
+app.use("/user", user)
 // Server listen
 app.listen(app.get('port'), () => {
   console.log('My port: http://localhost/' + app.get('port'))

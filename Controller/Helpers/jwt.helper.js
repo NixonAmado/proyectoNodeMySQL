@@ -1,11 +1,11 @@
 import { SignJWT, jwtVerify } from 'jose'
-import dotnev from 'dotenv'
+import dotenv from 'dotenv'
 import passport from 'passport'
 import { Strategy as BearerStrategy } from 'passport-http-bearer'
 // import { encode } from 'jose/dist/types/util/base64url'
 
 // Llamar variables de entorno
-dotnev.config(' ../')
+dotenv.config(' ../')
 console.log(process.env.JWT_KEY)
 
 // Configurar la estrategia de autenticacion Bearer
