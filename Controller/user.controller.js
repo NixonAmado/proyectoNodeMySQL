@@ -67,8 +67,7 @@ export async function deleteUsers (req, res) {
 
 export async function postUsers (req, res) {
   try {
-    const { name, password, authBool } = req
-    const postUserRes = await createUser(name, password, authBool)
+    const postUserRes = await createUser(req)
     res.status(200).json({ status: 200, data: postUserRes })
     return { status: 201, data: postUserRes }
   } catch (error) {
