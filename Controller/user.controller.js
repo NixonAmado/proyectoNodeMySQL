@@ -52,7 +52,7 @@ export async function getUsers (req, res) {
   }
 }
 
-export async function deleteUser (req, res) {
+export async function deleteUsers (req, res) {
   try {
     const deleteUserRes = await removeUser(req.id)
     res.status(200).json({ status: 200, data: deleteUserRes })
@@ -65,7 +65,7 @@ export async function deleteUser (req, res) {
   }
 }
 
-export async function postUser (req, res) {
+export async function postUsers (req, res) {
   try {
     const { name, password, authBool } = req
     const postUserRes = await createUser(name, password, authBool)
