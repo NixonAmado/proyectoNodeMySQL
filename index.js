@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('Hola mundo')
 })
 app.get('/token', createToken)
-app.use('/user', validateToken, user)
+app.use('/user', user)
 // Server listen
 app.listen(app.get('port'), () => {
   console.log('My port: http://localhost/' + app.get('port'))
