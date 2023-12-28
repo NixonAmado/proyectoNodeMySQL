@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { SignJWT, jwtVerify } from 'jose'
 import dotenv from 'dotenv'
 import passport from 'passport'
@@ -47,7 +48,7 @@ export async function validateToken (req, res, next) {
   try {
     const encoder = new TextEncoder()
     const { payload } = await jwtVerify(
-      req.bearers.authorization.split(' ')[1],
+      req.headers.authorization.split(' ')[1],
       encoder.encode(process.env.JWT_KEY)
     )
     if (payload.role === 'admin' || payload.role === 'student') {
@@ -65,7 +66,11 @@ export async function validateToken (req, res, next) {
 export async function createToken (req, res) {
   const encoder = new TextEncoder()
   if (req.body.role === 'admin' || req.body.role === 'student') {
-    const jwtConstructor = await new SignJWT(req.body).setProtectedHeader({ alg: 'HS256', typ: 'JWT' }.setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_KEY)))
+    const jwtConstructor = await new SignJWT(req.body)
+          .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+          .setIssuedAt()
+          .setExpirationTime('1h')
+          .sign(encoder.encode(process.env.JWT_KEY))
     res.status(200).json({ status: 200, token: jwtConstructor })
   } else {
     res.status(400).json({ status: 400, message: 'Invalid Credentials required' })

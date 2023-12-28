@@ -43,7 +43,7 @@ const removeUser = async (id) => {
 // Router funtions
 export async function getUsers (req, res) {
   try {
-    const users = await readUser
+    const users = await readUser()
     res.status(200).json({ status: 200, data: users })
   } catch (error) {
     console.error(error)
@@ -70,7 +70,7 @@ export async function postUsers (req, res) {
     const { name, password, authBool } = req
     const postUserRes = await createUser(name, password, authBool)
     res.status(200).json({ status: 200, data: postUserRes })
-    return { status: 201, data: users }
+    return { status: 201, data: postUserRes }
   } catch (error) {
     console.error(error)
     res.status(500)
