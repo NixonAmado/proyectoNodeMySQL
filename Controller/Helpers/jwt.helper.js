@@ -1,25 +1,25 @@
-/* eslint-disable indent */
-import { SignJWT, jwtVerify } from 'jose'
+// jose, dotenv, passport, passport-http-bearer
 import dotenv from 'dotenv'
 import passport from 'passport'
+import { SignJWT, jwtVerify } from 'jose'
 import { Strategy as BearerStrategy } from 'passport-http-bearer'
-// import { encode } from 'jose/dist/types/util/base64url'
 
-// Llamar variables de entorno
-dotenv.config(' ../')
+// llamar variables de entorno
+dotenv.config('../')
 console.log(process.env.JWT_KEY)
 
-// Configurar la estrategia de autenticacion Bearer
-passport.use(
-  new BearerStrategy(
+// configurar la estrategia de autenticacion Bearer
+
+passport.use(// verfica si hay un token en el encabezado de autorizacion, si esta, lo toma y utiliza la estrategia bearer para verificar su validez
+  new BearerStrategy( // se encarga de verificar el token en la peticion http de autorizacion y devolver un estado
     async (Token, done) => {
       try {
-        const encoder = new TextEncoder()
+        const encoder = TextEncoder() // Es una interfaz que convirte una cadena de caracteres en un su representacion binaria (Uint8Array)
         const { payload } = await jwtVerify(Token, encoder.encode(process.jwtVerify))
         return done(null, payload)
       } catch (error) {
         return done(error, false)
-      }// este bloque de codigo verfica que el token sea valido decodificandolo y comparando su firma con el jwtVerifiy
+      }
     }
   )
 )

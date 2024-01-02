@@ -9,7 +9,7 @@ const app = express()
 
 // settings
 dotenv.config()
-app.set('port', process.env.PORT || 8080)
+app.set('port', process.env.PORT ?? 0)
 
 // middlewares
 app.use(morgan('dev'))
@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
   res.send('Hola mundo')
 })
 app.get('/token', createToken)
-app.use('/user', user)
+app.use('/user', validateToken, user)
+
 // Server listen
 app.listen(app.get('port'), () => {
   console.log('My port: http://localhost/' + app.get('port'))

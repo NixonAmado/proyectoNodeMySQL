@@ -16,7 +16,7 @@ export async function validateU (req, res, next) {
     return data
   } catch (error) {
     console.log(error)
-    res.status(500).json({ status: 500, message: 'error' })
+    res.status(500).json({ status: 500, message: error })
     return error
   }// middleware para validar los datos
 }

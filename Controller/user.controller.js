@@ -7,31 +7,32 @@ import { queryAsync } from './conection.controller.js'
 // Logic
 const createUser = async (content) => {
   try {
-    const result = await queryAsync(
-      'INSERT INTO users VALUES(?,?,?)',
+    console.log('contenido', content.name)
+    await queryAsync(
+      'INSERT INTO user(name, password, isAuth) VALUES(?,?,?)',
       [content.name, content.password, content.isAuth]
     )
-    return result
+    return 'Usuario registrado exitosamente'
   } catch (error) {
-    return null
+    return error
   }
 }
 
 const readUser = async () => {
   try {
     const result = await queryAsync(
-      'SELECT * FROM users'
+      'SELECT * FROM user'
     )
     return result
   } catch (error) {
-    return null
+    return error
   }
 }
 
 const removeUser = async (id) => {
   try {
     const result = await queryAsync(
-      'DELETE FROM users WHERE id = ?',
+      'DELETE FROM user WHERE id = ?',
       [id]
     )
     return result
@@ -54,10 +55,11 @@ export async function getUsers (req, res) {
 
 export async function deleteUsers (req, res) {
   try {
-    const deleteUserRes = await removeUser(req.id)
+    console.log(req.params.id)
+    const deleteUserRes = await removeUser(req.params.id)
     res.status(200).json({ status: 200, data: deleteUserRes })
     // eslint-disable-next-line no-undef
-    return { status: 200, data: users }
+    return { status: 200, data: deleteUserRes }
   } catch (error) {
     console.error(error)
     res.status(500)
@@ -67,7 +69,7 @@ export async function deleteUsers (req, res) {
 
 export async function postUsers (req, res) {
   try {
-    const postUserRes = await createUser(req)
+    const postUserRes = await createUser(req.body)
     res.status(200).json({ status: 200, data: postUserRes })
     return { status: 201, data: postUserRes }
   } catch (error) {

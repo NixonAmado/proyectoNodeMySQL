@@ -6,4 +6,4 @@ export const user = Router()
 
 user.get('/', getUsers)
 user.post('/', validateU, postUsers)
-user.delete('/', limitUsersDelete(), deleteUsers)
+user.delete('/:id', limitUsersDelete(), deleteUsers)
